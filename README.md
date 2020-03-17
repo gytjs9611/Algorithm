@@ -1,2 +1,2 @@
 # Algorithm
-Study algorithm codes
+This repository is for studying algorithm codes.
