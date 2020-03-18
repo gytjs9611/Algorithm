@@ -12,6 +12,7 @@ int* previous;
 bool* flag;
 
 bool dfs(int);
+
 int main(void) {
 	FILE* fp = fopen("input2.txt", "r");
 	int src_size, dst_size, edge_size;
