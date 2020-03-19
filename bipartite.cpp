@@ -1,12 +1,12 @@
-/* Bipartite : °øÅë ÀÚ¿ø¿¡ ´ëÇØ ÃÖÀûÀ¸·Î ¹èºĞÇÏ´Â ¹®Á¦ */
+/* Bipartite : ê³µí†µ ìì›ì— ëŒ€í•´ ìµœì ìœ¼ë¡œ ë°°ë¶„í•˜ëŠ” ë¬¸ì œ */
 #include<iostream>
 #include<vector>
 #define MAX 101
 
 using namespace std;
 
-vector<int> source_vertex[MAX]; // source vertexÀÇ °³¼ö ÃÖ´ë 100°³(ÀÎµ¦½º 1~100, 0¹ø ¾È¾¸)
-//source_vertex[i]¿¡ i¿Í ¿¬°áµÇ¾îÀÖ´Â destination vertex¸¦ ÀúÀåÇÔ
+vector<int> source_vertex[MAX]; // source vertexì˜ ê°œìˆ˜ ìµœëŒ€ 100ê°œ(ì¸ë±ìŠ¤ 1~100, 0ë²ˆ ì•ˆì”€)
+//source_vertex[i]ì— iì™€ ì—°ê²°ë˜ì–´ìˆëŠ” destination vertexë¥¼ ì €ì¥í•¨
 
 int* previous;
 bool* flag;
@@ -21,9 +21,9 @@ int main(void) {
 
 	fscanf(fp, "%d %d %d", &src_size, &dst_size, &edge_size);
 
-	previous = (int*)malloc(sizeof(int)*(dst_size + 1)); // previous[i] = j; => j->i ¿¬°áµÇ¾îÀÖÀ½
-	flag = (bool*)malloc(sizeof(bool)*(dst_size + 1)); // dfsÇÒ ¶§ destination°ú ¿¬°á È®ÀÎ ÁßÀÓÀ» Ç¥½Ã
-	// ¡Ú previous¿Í flag´Â dst °³¼ö¸¸Å­ ÇÒ´çÇØ¾ßÇÑ´Ù´Â °Í ÀØÁö¸»±â!!!
+	previous = (int*)malloc(sizeof(int)*(dst_size + 1)); // previous[i] = j; => j->i ì—°ê²°ë˜ì–´ìˆìŒ
+	flag = (bool*)malloc(sizeof(bool)*(dst_size + 1)); // dfsí•  ë•Œ destinationê³¼ ì—°ê²° í™•ì¸ ì¤‘ì„ì„ í‘œì‹œ
+	// â˜… previousì™€ flagëŠ” dst ê°œìˆ˜ë§Œí¼ í• ë‹¹í•´ì•¼í•œë‹¤ëŠ” ê²ƒ ìŠì§€ë§ê¸°!!!
 
 	for (int i = 0; i < dst_size + 1; i++) {
 		previous[i] = -1;
@@ -31,8 +31,8 @@ int main(void) {
 	}
 
 	for (int i = 0; i < edge_size; i++) {
-		fscanf(fp, "%d %d", &src, &dst); // src->dst ·Î ¿¬°áµÇ¾îÀÖÀ½
-		source_vertex[src].push_back(dst); // c¾ğ¾îÀÏ °æ¿ì, °¢ src¸¶´Ù topÀÎµ¦½º¸¦ °¡Á®¾ßÇÔ
+		fscanf(fp, "%d %d", &src, &dst); // src->dst ë¡œ ì—°ê²°ë˜ì–´ìˆìŒ
+		source_vertex[src].push_back(dst); // cì–¸ì–´ì¼ ê²½ìš°, ê° srcë§ˆë‹¤ topì¸ë±ìŠ¤ë¥¼ ê°€ì ¸ì•¼í•¨
 	}
 
 	//for (int i = 1; i <= src_size; i++) {
@@ -45,8 +45,8 @@ int main(void) {
 
 
 	for (int i = 1; i <= src_size; i++) {
-		fill(flag, flag + dst_size + 1, false); // flag´Â src vertex ÇÑ °³ ³»¿¡¼­¸¸ À¯È¿ÇÏ¹Ç·Î ÃÊ±âÈ­½ÃÄÑÁÜ
-		if (dfs(i)) {
+		fill(flag, flag + dst_size + 1, false); // flagëŠ” src vertex í•œ ê°œ ë‚´ì—ì„œë§Œ ìœ íš¨í•˜ë¯€ë¡œ ì´ˆê¸°í™”ì‹œì¼œì¤Œ
+		if (dfs(i)) { // dst vertex ì†Œìœ  ê°€ëŠ¥í•˜ë‹¤ë©´ true, ë‹¤ë¥¸ ë…¸ë“œê°€ ì°¨ì§€í•´ì„œ ì†Œìœ  ë¶ˆê°€ëŠ¥í•˜ë‹¤ë©´ false
 			count++;
 		}
 	}
@@ -62,15 +62,15 @@ int main(void) {
 }
 bool dfs(int src) {
 	int dst;
-	// ¸¸¾à ÀÎÁ¢¸®½ºÆ®·Î ÇÑ´Ù¸é ptr¿¡ adjList[src]¸¦ ³Ö°í ptr->link ÇØ°¡¸é¼­ È®ÀÎ, ³ª¸ÓÁö´Â ´Ù ¶È°°ÀÌ ±¸Çö °¡´É
+	// ë§Œì•½ ì¸ì ‘ë¦¬ìŠ¤íŠ¸ë¡œ í•œë‹¤ë©´ ptrì— adjList[src]ë¥¼ ë„£ê³  ptr->link í•´ê°€ë©´ì„œ í™•ì¸, ë‚˜ë¨¸ì§€ëŠ” ë‹¤ ë˜‘ê°™ì´ êµ¬í˜„ ê°€ëŠ¥
 
 	for (int i = 0; i < source_vertex[src].size(); i++) {
-		dst = source_vertex[src][i]; // dst¿¡ src¿Í ¿¬°áµÈ vertexµé Â÷·Ê·Î ³ÖÀ½
+		dst = source_vertex[src][i]; // dstì— srcì™€ ì—°ê²°ëœ vertexë“¤ ì°¨ë¡€ë¡œ ë„£ìŒ
 		if (flag[dst]) {
 			continue;
 		}
 		flag[dst] = true;
-		// dst¿¡ ¿¬°áµÈ °ÍÀÌ ¾Æ¹«°Íµµ ¾ø´Ù or dst¿¡ ¿¬°áµÈ ³ëµå°¡ ´Ù¸¥ ³ëµå ¼±ÅÃÀÌ °¡´ÉÇÏ´Ù
+		// dstì— ì—°ê²°ëœ ê²ƒì´ ì•„ë¬´ê²ƒë„ ì—†ë‹¤ or dstì— ì—°ê²°ëœ ë…¸ë“œê°€ ë‹¤ë¥¸ ë…¸ë“œ ì„ íƒì´ ê°€ëŠ¥í•˜ë‹¤
 		if (previous[dst] == -1 || dfs(previous[dst])) {
 			previous[dst] = src;
 			return true;
