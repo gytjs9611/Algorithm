@@ -33,7 +33,7 @@ int main(void) {
 
 }
 void Permutation(char* data, int first, int last) {
-	if (first >= last) { // È¤Àº first==last
+	if (first >= last) { // È¤ï¿½ï¿½ first==last
 		cnt++;
 		cout << data << endl;
 		return;
@@ -56,7 +56,6 @@ void RandomQuickSort(char* data, int first, int last) {
 
 	if (first <= last) { // ** !! DO NOT FORGET THE EXIT CONDITION !! **
 		pivot_index = ReturnPivotIndex(data, first, last);
-
 		RandomQuickSort(data, first, pivot_index - 1);
 		RandomQuickSort(data, pivot_index + 1, last);
 	}
