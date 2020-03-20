@@ -25,7 +25,7 @@ int main(void) {
 
 
 	RandomQuickSort(input, 0, input_size - 1);
-	// sort first ( for the case of duplicated characters)
+	// sort first ( It means, "cab" is same as "abc" )
 
 	Permutation(input, 0, input_size - 1);
 
