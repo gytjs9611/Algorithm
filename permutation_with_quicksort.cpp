@@ -81,7 +81,8 @@ int ReturnPivotIndex(char* data, int first, int last) {
 
 
 	for (i = first; i < last; i++) {
-		if (data[i] <= pivot_data) { // if data smaller than pivot appear, swap with head_of_large
+		if (data[i] < pivot_data) { // if data smaller than pivot appear, swap with head_of_large
+			// if use 'data[i]<= pivot_data', than there can be exist non-essential swap
 			swap(data[i], data[head_of_large]);
 			head_of_large++;
 		}
