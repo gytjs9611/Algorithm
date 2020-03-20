@@ -33,7 +33,7 @@ int main(void) {
 
 }
 void Permutation(char* data, int first, int last) {
-	if (first >= last) { // Ȥ�� first==last
+	if (first >= last) { // Maybe it's okay to return if first==last
 		cnt++;
 		cout << data << endl;
 		return;
