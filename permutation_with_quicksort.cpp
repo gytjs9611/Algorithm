@@ -40,13 +40,16 @@ void Permutation(char* data, int first, int last) {
 	}
 
 	Permutation(data, first + 1, last);
-	RandomQuickSort(data, first + 1, last);
+	RandomQuickSort(data, first + 1, last); // turn back into first string
 
 	for (int i = first + 1; i <= last; i++) {
-		if (data[first] < data[i]) { // if data is bigger than first data, swap
+		if (data[first] < data[i]) {
+			// If data is bigger than first data, swap
+			// And it is same as to swap when data[i] is differet with the first data
+			// Because data is sorted, so there's no smaller data behind the data[i]
 			swap(data[first], data[i]);
 			Permutation(data, first + 1, last);
-			RandomQuickSort(data, first + 1, last);
+			RandomQuickSort(data, first + 1, last); // turn back into state of swap 
 		}
 	}
 
