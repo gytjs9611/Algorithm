@@ -49,7 +49,7 @@ void Permutation(char* data, int first, int last) {
 			// Because data is sorted, so there's no smaller data behind the data[i]
 			swap(data[first], data[i]);
 			Permutation(data, first + 1, last);
-			RandomQuickSort(data, first + 1, last); // turn back into state of swap 
+			RandomQuickSort(data, first + 1, last); // turn back into the state right before the permutation
 		}
 	}
 
