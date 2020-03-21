@@ -72,7 +72,7 @@ void Dijkstra(int start) {
 		src = pq.top().second; // select the vertex which has the smallest cost
 		pq.pop(); // remember pop has no return value
 
-		//if (!flag[src]) { // I think is not essential cause only push unvisited vertex in queue, so flag must be always false
+		//if (!flag[src]) { // I think it's not essential cause only push unvisited vertex in queue, so flag must be always false
 			ptr = graph[src];
 			while (ptr) {
 				dst = ptr->vertex;
