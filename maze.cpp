@@ -11,6 +11,7 @@ using namespace std;
 
 bool** maze;
 bool** flag;
+int** cost;
 vector<vector<pair<int, int>>> previous;
 queue<pair<int, int>> maze_q;
 vector<pair<int, int>> direction;
@@ -20,24 +21,33 @@ int cnt = 0;
 void SetDirection();
 void InitMaze(int, int);
 void InitPrev(int, int);
-bool FindPath(int, int, int, int);
+int FindPath(int, int, int, int);
 void PrintPath(int, int);
 
 int main(void) {
 	FILE* fp = fopen("maze_input.txt", "r");
 	int row_size, col_size;
-	bool result;
+	int result;
 
 	fscanf(fp, "%d %d", &row_size, &col_size);
 	printf("%d %d\n", row_size, col_size);
 
 	maze = (bool**)malloc(sizeof(bool*)*(row_size+2)); // CAUTION!! size+2 !!!! to block the edges of the maze
-	flag = (bool**)malloc(sizeof(bool*)*(row_size + 2));
+	flag = (bool**)malloc(sizeof(bool*)*(row_size + 1));
+	cost = (int**)malloc(sizeof(int*)*(row_size + 1));
 	for (int i = 0; i <= row_size+1; i++) {
 		maze[i] = (bool*)malloc(sizeof(bool)*(col_size+2));
-		flag[i] = (bool*)malloc(sizeof(bool)*(col_size+2));
 	}
 
+	for (int i = 0; i <= row_size; i++) {
+		flag[i] = (bool*)malloc(sizeof(bool)*(col_size + 1));
+		cost[i] = (int*)malloc(sizeof(int)*(col_size + 1));
+		for (int j = 0; j <= col_size; j++) {
+			flag[i][j] = false;
+			cost[i][j] = 1;
+		}
+	}
+	// initialize
 
 	InitMaze(row_size, col_size);
 	InitPrev(row_size, col_size);
@@ -61,7 +71,7 @@ int main(void) {
 	result = FindPath(1, 1, row_size, col_size);
 
 	if (result) {
-		cout << "Path"<<endl;
+		printf("Path(cost:%d)\n", result);
 		PrintPath(row_size, col_size);
 		cout << endl;
 	}
@@ -69,9 +79,9 @@ int main(void) {
 		cout << "Path doesn't exist" << endl;
 	}
 
-	printf("%d\n", cnt);
+
 }
-bool FindPath(int start_row, int start_col, int row_size, int col_size) {
+int FindPath(int start_row, int start_col, int row_size, int col_size) {
 	pair<int, int> now;
 	int row, col, next_row, next_col;
 
@@ -79,6 +89,7 @@ bool FindPath(int start_row, int start_col, int row_size, int col_size) {
 	now.second = start_col;
 
 	maze_q.push(now);
+	flag[now.first][now.second] = true;
 
 	while (!maze_q.empty()) {
 		now = maze_q.front();
@@ -86,23 +97,26 @@ bool FindPath(int start_row, int start_col, int row_size, int col_size) {
 		row = now.first;
 		col = now.second;
 
-
 		if (row == row_size && col == col_size) {
-			return true;
+			return cost[row][col];
 		}
 		for (int i = 0; i <4; i++) {
 			next_row = row + direction[i].first;
 			next_col = col + direction[i].second;
 
-			if (!flag[next_row][next_col]) { // if adjacent is not visited
-				if (maze[next_row][next_col]) { // and has a way
-					maze_q.push(make_pair(next_row, next_col));
-					previous[next_row][next_col] = now;
+			if (maze[next_row][next_col]) { // if it has a way to move
+				if (!flag[next_row][next_col]) { // and is not visited
+
+					maze_q.push(make_pair(next_row, next_col)); // push into the queue
+					flag[next_row][next_col] = true; // and you must set the flag true right after you push into the queue !!!!!!!!!!!!!!!!!
+
+					previous[next_row][next_col] = now; // update path
+					cost[next_row][next_col] = cost[row][col] + 1;  // update distance
+
 				}
 			}
 		}
 
-		flag[row][col] = true;
 		maze_q.pop();
 	}
 	return false;
@@ -139,7 +153,6 @@ void InitMaze(int row, int col) {
 	for (int i = 0; i <= row+1; i++) {
 		for (int j = 0; j <= col+1; j++) {
 			maze[i][j] = false;
-			flag[i][j] = false;
 		}
 	}
 }
